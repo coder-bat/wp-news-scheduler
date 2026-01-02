@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy News Scheduler - Admin</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #818cf8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 1rem;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      opacity: 0.9;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .stat-card h3 {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card .value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .schedule-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .schedule-item:last-child {
+      border-bottom: none;
+    }
+
+    .schedule-time {
+      font-weight: 600;
+      width: 80px;
+    }
+
+    .schedule-name {
+      color: var(--text-muted);
+    }
+
+    .post-item {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post-item:last-child {
+      border-bottom: none;
+    }
+
+    .post-item h4 {
+      margin-bottom: 0.25rem;
+    }
+
+    .post-item h4 a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .post-item h4 a:hover {
+      color: var(--primary);
+    }
+
+    .post-meta {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .audit-item {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+    }
+
+    .audit-item:last-child {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge-success { background: #d1fae5; color: #065f46; }
+    .badge-warning { background: #fef3c7; color: #92400e; }
+    .badge-danger { background: #fee2e2; color: #991b1b; }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tab {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .tab.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+    }
+
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 1rem;
+      border-radius: 0.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🌟 Happy News Scheduler</h1>
+      <p id="current-time">Loading...</p>
+    </header>
+
+    <div class="stats-grid" id="stats">
+      <div class="stat-card">
+        <h3>Today</h3>
+        <div class="value" id="stat-today">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>This Week</h3>
+        <div class="value" id="stat-week">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>Total</h3>
+        <div class="value" id="stat-total">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>Feeds</h3>
+        <div class="value" id="stat-feeds">-</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📅 Schedule</h2>
+      <div id="schedule">
+        <div class="loading">Loading schedule...</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tabs">
+        <button class="tab active" data-tab="posts">Recent Posts</button>
+        <button class="tab" data-tab="audit">Audit Log</button>
+        <button class="tab" data-tab="feeds">Feeds</button>
+      </div>
+
+      <div id="posts" class="tab-content active">
+        <div class="loading">Loading posts...</div>
+      </div>
+
+      <div id="audit" class="tab-content">
+        <div class="loading">Loading audit log...</div>
+      </div>
+
+      <div id="feeds" class="tab-content">
+        <div class="loading">Loading feeds...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Fetch and render stats
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+
+        document.getElementById('current-time').textContent = data.currentTime;
+        document.getElementById('stat-today').textContent = data.stats.publishedToday;
+        document.getElementById('stat-week').textContent = data.stats.publishedThisWeek;
+        document.getElementById('stat-total').textContent = data.stats.totalPublished;
+        document.getElementById('stat-feeds').textContent = data.stats.feedsConfigured;
+
+        // Render schedule
+        const scheduleHtml = Object.entries(data.schedule)
+          .map(([name, time]) => `
+            <div class="schedule-item">
+              <span class="schedule-time">${time}</span>
+              <span class="schedule-name">${name.charAt(0).toUpperCase() + name.slice(1)}</span>
+            </div>
+          `).join('');
+        document.getElementById('schedule').innerHTML = scheduleHtml;
+      } catch (e) {
+        document.getElementById('schedule').innerHTML = `<div class="error">Failed to load stats</div>`;
+      }
+    }
+
+    // Fetch and render posts
+    async function loadPosts() {
+      try {
+        const res = await fetch('/api/posts');
+        const data = await res.json();
+
+        if (data.posts.length === 0) {
+          document.getElementById('posts').innerHTML = '<p class="loading">No posts yet</p>';
+          return;
+        }
+
+        const html = data.posts.map(post => `
+          <div class="post-item">
+            <h4><a href="${post.wpPostUrl}" target="_blank">${post.title}</a></h4>
+            <div class="post-meta">
+              ${new Date(post.publishedAt).toLocaleString()} · ${post.slot}
+            </div>
+          </div>
+        `).join('');
+        document.getElementById('posts').innerHTML = html;
+      } catch (e) {
+        document.getElementById('posts').innerHTML = `<div class="error">Failed to load posts</div>`;
+      }
+    }
+
+    // Fetch and render audit log
+    async function loadAudit() {
+      try {
+        const res = await fetch('/api/audit');
+        const data = await res.json();
+
+        if (data.entries.length === 0) {
+          document.getElementById('audit').innerHTML = '<p class="loading">No audit entries yet</p>';
+          return;
+        }
+
+        const html = data.entries.map(entry => {
+          const badge = entry.action === 'publish' ? 'success' 
+            : entry.action === 'skip' ? 'warning' 
+            : 'danger';
+          return `
+            <div class="audit-item">
+              <span class="badge badge-${badge}">${entry.action}</span>
+              <strong>${entry.slot}</strong> · 
+              ${new Date(entry.timestamp).toLocaleString()}
+              ${entry.itemTitle ? ` · ${entry.itemTitle}` : ''}
+              ${entry.reason ? ` · <em>${entry.reason}</em>` : ''}
+              ${entry.error ? ` · <em style="color: var(--danger)">${entry.error}</em>` : ''}
+            </div>
+          `;
+        }).join('');
+        document.getElementById('audit').innerHTML = html;
+      } catch (e) {
+        document.getElementById('audit').innerHTML = `<div class="error">Failed to load audit log</div>`;
+      }
+    }
+
+    // Fetch and render feeds
+    async function loadFeeds() {
+      try {
+        const res = await fetch('/api/feeds');
+        const data = await res.json();
+
+        const html = data.feeds.map(feed => `
+          <div class="post-item">
+            <h4>${feed.name}</h4>
+            <div class="post-meta">
+              Priority: ${feed.priority} · 
+              ${feed.allowMixedTone ? 'Mixed tone allowed' : 'Uplifting only'}
+            </div>
+          </div>
+        `).join('');
+        document.getElementById('feeds').innerHTML = html;
+      } catch (e) {
+        document.getElementById('feeds').innerHTML = `<div class="error">Failed to load feeds</div>`;
+      }
+    }
+
+    // Initial load
+    loadStats();
+    loadPosts();
+    loadAudit();
+    loadFeeds();
+
+    // Refresh stats every minute
+    setInterval(loadStats, 60000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+# wp-news-scheduler configuration
+
+wordpress:
+  siteUrl: "https://lovepeaceand.dev"
+  categorySlug: "happy-news"
+  categoryName: "Happy News"
+
+schedule:
+  timezone: "America/New_York"
+  slots:
+    morning: "09:00"
+    afternoon: "13:00"
+    evening: "18:00"
+  latenessThresholdMinutes: 30
+
+feeds:
+  - name: "Positive News"
+    url: "https://www.positive.news/feed/"
+    priority: 10
+
+  - name: "Good News Network"
+    url: "https://www.goodnewsnetwork.org/feed/"
+    priority: 10
+
+  - name: "Reasons to be Cheerful"
+    url: "https://reasonstobecheerful.world/feed/"
+    priority: 10
+
+  - name: "Solutions Journalism"
+    url: "https://www.solutionsjournalism.org/storytracker/feed"
+    priority: 8
+
+  - name: "YES! Magazine"
+    url: "https://www.yesmagazine.org/rss.xml"
+    priority: 8
+
+  - name: "Greater Good"
+    url: "https://greatergood.berkeley.edu/feed"
+    priority: 6
+
+  - name: "NPR"
+    url: "https://feeds.npr.org/1001/rss.xml"
+    priority: 4
+    allowMixedTone: true
+    upliftThresholdBoost: 5
+
+  - name: "BBC"
+    url: "https://feeds.bbci.co.uk/news/rss.xml"
+    priority: 4
+    allowMixedTone: true
+    upliftThresholdBoost: 5
+
+filter:
+  minUpliftScore: 15
+  maxPerSource: 2
+  hardExcludes:
+    - "death"
+    - "killed"
+    - "murder"
+    - "shooting"
+    - "tragedy"
+    - "disaster"
+    - "crisis"
+    - "war"
+    - "terror"
+    - "victim"
+    - "fatal"
+    - "died"
+    - "violence"
+    - "assault"
+    - "abuse"
+
+  positiveBoosts:
+    - word: "breakthrough"
+      boost: 8
+    - word: "success"
+      boost: 6
+    - word: "hope"
+      boost: 5
+    - word: "celebrate"
+      boost: 5
+    - word: "inspiring"
+      boost: 5
+    - word: "heartwarming"
+      boost: 6
+    - word: "rescued"
+      boost: 5
+    - word: "recovery"
+      boost: 5
+    - word: "innovation"
+      boost: 4
+    - word: "discovery"
+      boost: 5
+    - word: "solution"
+      boost: 5
+    - word: "progress"
+      boost: 4
+    - word: "community"
+      boost: 3
+    - word: "volunteer"
+      boost: 4
+    - word: "kindness"
+      boost: 5
+    - word: "hero"
+      boost: 5
+    - word: "joy"
+      boost: 4
+    - word: "peace"
+      boost: 4
+
+images:
+  providers:
+    - wikimedia
+    - unsplash
+    - pexels
+
+content:
+  excerptMaxChars: 280
+  includeSourceLink: true
+  includeInternalLink: true
+  internalLinkUrl: "https://lovepeaceand.dev/happy-news/"
+
+secrets:
+  wpUsernameFile: "wp_username"
+  wpAppPasswordFile: "wp_app_password"

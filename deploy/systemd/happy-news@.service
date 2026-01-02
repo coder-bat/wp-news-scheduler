@@ -1,0 +1,20 @@
+[Unit]
+Description=Happy News Publisher - %i slot
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/wp-news-scheduler
+ExecStart=/usr/bin/docker compose run --rm publisher node dist/publisher/index.js %i
+TimeoutStartSec=300
+User=happynews
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=happy-news-%i
+
+[Install]
+WantedBy=multi-user.target

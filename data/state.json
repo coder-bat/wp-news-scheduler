@@ -1,0 +1,70 @@
+{
+  "publishedUrls": [
+    "https://www.positive.news/society/most-read-stories-of-2025/",
+    "https://www.goodnewsnetwork.org/endangered-iguanas-make-a-romantic-getaway-out-of-protected-caribbean-island-populations-explode/",
+    "https://www.goodnewsnetwork.org/events070101/"
+  ],
+  "published": [
+    {
+      "url": "https://www.positive.news/society/most-read-stories-of-2025/",
+      "title": "From rewilded bison to far-right repenters: our most read stories of 2025",
+      "wpPostId": 341,
+      "wpPostUrl": "https://lovepeaceand.dev/2026/01/02/happy-news-2026-01-02-morning-from-rewilded-bison-to-far-right-repenters-our-mos/",
+      "slot": "morning",
+      "publishedAt": "2026-01-02T07:24:33.495Z"
+    },
+    {
+      "url": "https://www.goodnewsnetwork.org/endangered-iguanas-make-a-romantic-getaway-out-of-protected-caribbean-island-populations-explode/",
+      "title": "Endangered Iguanas Make a Romantic Getaway Out of Protected Caribbean Island–Populations Explode",
+      "wpPostId": 342,
+      "wpPostUrl": "https://lovepeaceand.dev/2026/01/02/happy-news-2026-01-02-morning-endangered-iguanas-make-a-romantic-getaway-out-of/",
+      "slot": "morning",
+      "publishedAt": "2026-01-02T07:24:43.266Z"
+    },
+    {
+      "url": "https://www.goodnewsnetwork.org/events070101/",
+      "title": "Good News in History, January 1",
+      "wpPostId": 350,
+      "wpPostUrl": "https://lovepeaceand.dev/2026/01/02/happy-news-2026-01-02-morning-good-news-in-history-january-1/",
+      "slot": "morning",
+      "publishedAt": "2026-01-02T07:33:34.546Z"
+    }
+  ],
+  "auditLog": [
+    {
+      "slot": "morning",
+      "action": "skip",
+      "itemTitle": "A High School Supported its Star Student When She Needed it Most, 20 Years Later She Pays it Back",
+      "itemUrl": "https://www.goodnewsnetwork.org/a-high-school-supported-its-star-student-when-she-needed-it-most-20-years-later-she-pays-it-back/",
+      "reason": "Duplicate slug",
+      "timestamp": "2026-01-02T07:21:17.488Z"
+    },
+    {
+      "slot": "morning",
+      "action": "publish",
+      "itemTitle": "From rewilded bison to far-right repenters: our most read stories of 2025",
+      "itemUrl": "https://www.positive.news/society/most-read-stories-of-2025/",
+      "wpPostId": 341,
+      "wpPostUrl": "https://lovepeaceand.dev/2026/01/02/happy-news-2026-01-02-morning-from-rewilded-bison-to-far-right-repenters-our-mos/",
+      "timestamp": "2026-01-02T07:24:33.495Z"
+    },
+    {
+      "slot": "morning",
+      "action": "publish",
+      "itemTitle": "Endangered Iguanas Make a Romantic Getaway Out of Protected Caribbean Island–Populations Explode",
+      "itemUrl": "https://www.goodnewsnetwork.org/endangered-iguanas-make-a-romantic-getaway-out-of-protected-caribbean-island-populations-explode/",
+      "wpPostId": 342,
+      "wpPostUrl": "https://lovepeaceand.dev/2026/01/02/happy-news-2026-01-02-morning-endangered-iguanas-make-a-romantic-getaway-out-of/",
+      "timestamp": "2026-01-02T07:24:43.266Z"
+    },
+    {
+      "slot": "morning",
+      "action": "publish",
+      "itemTitle": "Good News in History, January 1",
+      "itemUrl": "https://www.goodnewsnetwork.org/events070101/",
+      "wpPostId": 350,
+      "wpPostUrl": "https://lovepeaceand.dev/2026/01/02/happy-news-2026-01-02-morning-good-news-in-history-january-1/",
+      "timestamp": "2026-01-02T07:33:34.547Z"
+    }
+  ]
+}

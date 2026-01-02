@@ -1,0 +1,38 @@
+services:
+  # Publisher service (runs on demand via systemd)
+  publisher:
+    build: .
+    image: wp-news-scheduler:latest
+    container_name: happy-news-publisher
+    volumes:
+      - ./config:/config:ro
+      - ./secrets:/secrets:ro
+      - happy-news-data:/data
+    environment:
+      - CONFIG_PATH=/config/config.yaml
+      - STATE_PATH=/data/state.json
+    command: ["node", "dist/publisher/index.js"]
+    restart: "no"
+    profiles:
+      - publisher
+
+  # Admin UI service (runs continuously)
+  admin:
+    build: .
+    image: wp-news-scheduler:latest
+    container_name: happy-news-admin
+    volumes:
+      - ./config:/config:ro
+      - ./secrets:/secrets:ro
+      - happy-news-data:/data
+    environment:
+      - CONFIG_PATH=/config/config.yaml
+      - STATE_PATH=/data/state.json
+      - ADMIN_PORT=8080
+    command: ["node", "dist/admin/index.js"]
+    ports:
+      - "127.0.0.1:8080:8080"  # Localhost only
+    restart: unless-stopped
+
+volumes:
+  happy-news-data:

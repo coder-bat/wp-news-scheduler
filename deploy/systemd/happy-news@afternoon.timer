@@ -1,0 +1,10 @@
+[Unit]
+Description=Happy News Publisher - Afternoon (13:00)
+
+[Timer]
+OnCalendar=*-*-* 13:00:00
+AccuracySec=1min
+Persistent=false
+
+[Install]
+WantedBy=timers.target

@@ -39,12 +39,13 @@ export function loadConfig(configPath?: string): Config {
 
 /**
  * Read a secret from file
- * Checks /run/secrets/ first (Docker), then local secrets/ directory
+ * Checks multiple locations for Docker and local dev
  */
 function readSecretFile(name: string): string | undefined {
   const paths = [
-    `/run/secrets/${name}`,
-    resolve(PROJECT_ROOT, 'secrets', name),
+    `/run/secrets/${name}`,      // Docker Swarm secrets
+    `/secrets/${name}`,           // Docker Compose mount
+    resolve(PROJECT_ROOT, 'secrets', name),  // Local dev
   ];
 
   for (const path of paths) {
